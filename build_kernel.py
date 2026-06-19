@@ -80,11 +80,11 @@ class CompilerClang:
         return match_and_get(clangversionRegex, tcversion)
     
 def main():
-    parser = argparse.ArgumentParser(description="Build Grass Kernel with specified arguments")
+    parser = argparse.ArgumentParser(description="Build ReGrass Kernel with specified arguments")
     
     parser.add_argument('--oneui', action='store_true', help="OneUI variant")
     parser.add_argument('--aosp', action='store_true', help="AOSP variant")
-    parser.add_argument('--target', type=str, required=True, help="Target device (a51/m21/...)")
+    parser.add_argument('--target', type=str, required=True, help="Target device (a50s/a51/m21/...)")
     parser.add_argument('--no-ksu', action='store_true', help="Don't include KernelSU support in kernel")
     parser.add_argument('--allow-dirty', action='store_true', help="Allow dirty build")
 
@@ -95,8 +95,8 @@ def main():
         print("Please specify one of the following variants: --oneui or --aosp")
         return
     
-    if not args.target in ['a51', 'm21', 'm31', 'm31s', 'f41', 'm30s']:
-        print("Please specify a valid target: a51/m21/m31/m31s/f41/m30s")
+    if not args.target in ['a50s', 'a51', 'm21', 'm31', 'm31s', 'f41', 'm30s']:
+        print("Please specify a valid target: a50s/a51/m21/m31/m31s/f41/m30s")
         return
     
     # Check files
