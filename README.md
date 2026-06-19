@@ -50,7 +50,7 @@ $ bash <(curl https://gist.githubusercontent.com/roynatech2544/0feeeb35a6d1782b1
 # Build the kernel
 $ ./build_kernel.sh aosp # (for AOSP)
 $ ./build_kernel.sh oneui # (for OneUI)
-$ DEVICE=m21 ./build_kernel.sh aosp # (for M21, AOSP)
+$ python build_kernel.py (--aosp|--oneui) --target=m31 (--no-ksu) (--allow-dirty)
 ```
 
 After build the image of the kernel will be in out/arch/arm64/boot/Image
