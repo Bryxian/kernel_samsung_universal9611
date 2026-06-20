@@ -20,7 +20,7 @@
 
 * Disable Samsung securities, debug drivers, etc modifications
 * Checkout and rebase against Android common kernel source, Removing Samsung additions to drivers like ext4,f2fs and more
-* Compiled with bleeding edge Neutron Clang 17, with full LLVM binutils, LTO (Link time optimization) and -O3  
+* Compiled with bleeding edge Clang 19, with full LLVM binutils, LTO (Link time optimization) and -O3
 * Import Erofs, Incremental FS, BinderFS and several backports.
 * Supports DeX touchpad for corresponding OneUI ports that have DeX ported.
 * Lot of debug codes/configuration Samsung added are removed.
