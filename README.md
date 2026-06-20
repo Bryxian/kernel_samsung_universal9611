@@ -36,15 +36,14 @@ You will need ubuntu, git, around 8GB RAM and bla-bla-bla...
 $ sudo apt install -y bash git make libssl-dev curl bc pkg-config m4 libtool automake autoconf
 
 # Clone this repository
-$ git clone https://github.com/Gojikovi/kernel_samsung_universal9611
+$ git clone -b Grass-282 https://github.com/Bryxian/kernel_samsung_universal9611
 
 # Go into the repository
 $ cd kernel_samsung_universal9611
 
 # Install toolchain
-# You could try any clang/LLVM based toolchain, however I use neutron clang
-# If you are using Arch or distro with latest glibc, You may want to use antman instead.
-$ bash <(curl https://gist.githubusercontent.com/roynatech2544/0feeeb35a6d1782b186990ff2a0b3657/raw/b170134a94dac3594df506716bc7b802add2724b/setup.sh)
+# You could try any clang/LLVM based toolchain, however I use WeebX clang
+# See the intructions: https://github.com/XSans0/WeebX-Clang
 
 # Building kernel is simple, a python script is provided.
 # Options inside parenthesis are optional, Parenthesis' with | between 
