@@ -36,7 +36,7 @@ You will need ubuntu, git, around 8GB RAM and bla-bla-bla...
 $ sudo apt install -y bash git make libssl-dev curl bc pkg-config m4 libtool automake autoconf
 
 # Clone this repository
-$ git clone https://github.com/Gojikovi/kernel_samsung_universal9611
+$ git clone https://github.com/Bryxian/kernel_samsung_universal9611
 
 # Go into the repository
 $ cd kernel_samsung_universal9611
