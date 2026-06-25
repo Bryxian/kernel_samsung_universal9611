@@ -3,6 +3,7 @@ import subprocess
 import os
 import shutil
 import re
+import sys
 import time
 from datetime import datetime
 import zipfile
@@ -80,23 +81,35 @@ class CompilerClang:
         return match_and_get(clangversionRegex, tcversion)
     
 def main():
-    parser = argparse.ArgumentParser(description="Build ReGrass Kernel with specified arguments")
+    parser = argparse.ArgumentParser(
+        description="Build ReGrass Kernel with specified arguments"
+    )
     
     parser.add_argument('--oneui', action='store_true', help="OneUI variant")
     parser.add_argument('--aosp', action='store_true', help="AOSP variant")
     parser.add_argument('--target', type=str, required=True, help="Target device (a50s/a51/m21/...)")
     parser.add_argument('--no-ksu', action='store_true', help="Don't include KernelSU support in kernel")
+    parser.add_argument('--no-susfs', action='store_true', help="Don't include SUSFS support in kernel")
     parser.add_argument('--allow-dirty', action='store_true', help="Allow dirty build")
 
-    # Parse the arguments
     args = parser.parse_args()
     
+    if args.no_ksu and not args.no_susfs:
+        print("\n[WARNING] SUSFS requires KernelSU.")
+        print("[WARNING] Building with SUSFS enabled and KernelSU disabled may cause Kconfig dependency errors.\n")
+
+        choice = input("Continue anyway? [y/N]: ").strip().lower()
+
+        if choice not in ('y', 'yes'):
+            print("Build cancelled by user.")
+            sys.exit(1)
+
     if not args.oneui and not args.aosp:
         print("Please specify one of the following variants: --oneui or --aosp")
         return
-    
+        
     if not args.target in ['a50s', 'a51', 'm21', 'm31', 'm31s', 'f41', 'm30s']:
-        print("Please specify a valid target: a50s/a51/m21/m31/m31s/f41/m30s")
+        print("Please specify a valid target: a50s/a51/m31/m31s/f41/m30s")
         return
     
     # Check files
@@ -111,7 +124,7 @@ def main():
     
     # Print info
     print_dictinfo({
-        'TARGET_KERNEL': 'Grass',
+        'TARGET_KERNEL': 'ReGrass',
         'TARGET_VARIANT': variantStr,
         'TARGET_DEVICE': args.target,
         'TARGET_INCLUDES_KSU': not args.no_ksu,
@@ -135,6 +148,8 @@ def main():
     defconfigs = [f'{args.target}_defconfig', 'grass.config', f'{args.target}.config']
     if not args.no_ksu:
         defconfigs.append('ksu.config')
+    if not args.no_susfs:
+        defconfigs.append('susfs.config')
     if args.aosp:
         defconfigs.append('aosp.config')
     defconfigs = ['vendor/' + i for i in defconfigs]
@@ -152,7 +167,7 @@ def main():
         kver = match_and_get(r'"([^"]+)"', f.read())
     
     shutil.copyfile('out/arch/arm64/boot/Image', 'AnyKernel3/Image')
-    zipname = 'GrassKernel_{}_{}_{}.zip'.format(
+    zipname = 'ReGrassKernel_{}_{}_{}.zip'.format(
         args.target, variantStr, datetime.today().strftime('%Y-%m-%d'))
     os.chdir('AnyKernel3/')
     zip_files(zipname, [
